@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -10,7 +9,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal" >
 
-        <com.zhy.view.ColorTrackView
+        <com.excellence.colortrackviewlibrary.ColorTrackView
             android:id="@+id/id_tab_01"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -21,7 +20,7 @@
             zhy:text_origin_color="#ff000000"
             zhy:text_size="18sp" />
 
-        <com.zhy.view.ColorTrackView
+        <com.excellence.colortrackviewlibrary.ColorTrackView
             android:id="@+id/id_tab_02"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -31,7 +30,7 @@
             zhy:text_origin_color="#ff000000"
             zhy:text_size="18sp" />
 
-        <com.zhy.view.ColorTrackView
+        <com.excellence.colortrackviewlibrary.ColorTrackView
             android:id="@+id/id_tab_03"
             android:layout_width="0dp"
             android:layout_height="match_parent"
