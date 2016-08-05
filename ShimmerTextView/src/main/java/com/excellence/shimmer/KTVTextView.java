@@ -14,11 +14,6 @@ public class KTVTextView extends View
 {
 	private int mTextStartX;
 
-	public enum Direction
-	{
-		LEFT, RIGHT;
-	}
-
 	private int mDirection = DIRECTION_LEFT;
 	private static final int DIRECTION_LEFT = 0;
 	private static final int DIRECTION_RIGHT = 1;
@@ -32,7 +27,6 @@ public class KTVTextView extends View
 
 	private Rect mTextBound = new Rect();
 	private int mTextWidth;
-	private int mRealWidth;
 	private float mProgress = 0;
 
 	public KTVTextView(Context context)
@@ -68,8 +62,7 @@ public class KTVTextView extends View
 		int height = measureHeight(heightMeasureSpec);
 		setMeasuredDimension(width, height);
 
-		mRealWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-		mTextStartX = mRealWidth / 2 - mTextWidth / 2;
+		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
 	}
 
 	private int measureHeight(int measureSpec)
@@ -160,7 +153,7 @@ public class KTVTextView extends View
 		canvas.save(Canvas.CLIP_SAVE_FLAG);
 		// clipRect()截取画布中的一个区域
 		canvas.clipRect(startX, 0, endX, getMeasuredHeight());
-		canvas.drawText(mText, mTextStartX, getMeasuredHeight() / 2 + mTextBound.height() / 2, mPaint);
+		canvas.drawText(mText, mTextStartX, getMeasuredHeight() / 2 - ((mPaint.descent() + mPaint.ascent()) / 2), mPaint);
 		// restore()最后要将画布回复原来的数据（记住save()跟restore()要配对使用）
 		canvas.restore();
 	}
