@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.excellence.frameimagetext.MainActivity">
+
+    <com.excellence.frameimagetext.FrameImageText
+        android:id="@+id/frame_image_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
+
+    <com.excellence.frameimagetext.AnimPaddingDrawableTextView
+        android:id="@+id/anim_image_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="10dp"
+        app:image_background="@drawable/selector"
+        app:image_frame="@drawable/download_state"/>
+
+    <com.excellence.frameimagetext.AnimPaddingDrawableTextView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:image_frame="@drawable/download_state"/>
+
+</LinearLayout>
