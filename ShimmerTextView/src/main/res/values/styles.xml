@@ -20,6 +20,9 @@
         <attr name="text" format="string|reference"/>
         <attr name="text_size" format="dimension|reference"/>
         <attr name="progress" format="float"/>
+        <attr name="progressable" format="boolean"/>
+        <attr name="background_horizontal_padding" format="dimension|reference"/>
+        <attr name="background_vertical_padding" format="dimension|reference"/>
     </declare-styleable>
 
 </resources>
