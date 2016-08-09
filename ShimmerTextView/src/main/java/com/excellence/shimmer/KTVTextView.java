@@ -2,6 +2,7 @@ package com.excellence.shimmer;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -18,12 +19,14 @@ public class KTVTextView extends View
 	private static final int DIRECTION_LEFT = 0;
 	private static final int DIRECTION_RIGHT = 1;
 
-	private String mText = "张Wei炜";
-	private Paint mPaint;
+	private String mText = KTVTextView.class.getSimpleName();
+	private Paint mPaint = null;
 	private int mTextSize = sp2px(30);
 
-	private int mTextOriginColor = 0xff000000;
-	private int mTextChangeColor = 0xffff0000;
+	private int mTextOriginColor = Color.BLACK;
+	private int mTextChangeColor = Color.TRANSPARENT;
+	private int mForegroundOriginColor = Color.TRANSPARENT;
+	private int mForegroundChangeColor = Color.TRANSPARENT;
 
 	private Rect mTextBound = new Rect();
 	private int mTextWidth;
@@ -37,6 +40,12 @@ public class KTVTextView extends View
 	public KTVTextView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+
+		init();
+	}
+
+	private void init()
+	{
 		// 抗锯齿
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setTextSize(mTextSize);
