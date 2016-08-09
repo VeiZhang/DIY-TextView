@@ -9,16 +9,16 @@
     </style>
 
     <declare-styleable name="KTVTextView">
-        <attr name="originColor" format="color|reference"/>
-        <attr name="fillTextColor" format="color|reference"/>
-        <attr name="originForegroundColor" format="color|reference"/>
-        <attr name="fillForegroundColor" format="color|reference"/>
+        <attr name="text_origin_color" format="color|reference"/>
+        <attr name="text_change_color" format="color|reference"/>
+        <attr name="foreground_origin_color" format="color|reference"/>
+        <attr name="foreground_change_color" format="color|reference"/>
         <attr name="direction" format="enum">
             <enum name="left" value="0"/>
             <enum name="right" value="1"/>
         </attr>
         <attr name="text" format="string|reference"/>
-        <attr name="textSize" format="dimension|reference"/>
+        <attr name="text_size" format="dimension|reference"/>
         <attr name="progress" format="float"/>
     </declare-styleable>
 

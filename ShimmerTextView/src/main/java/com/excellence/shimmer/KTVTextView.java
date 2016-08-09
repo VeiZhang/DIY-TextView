@@ -1,6 +1,7 @@
 package com.excellence.shimmer;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.view.View;
 public class KTVTextView extends View
 {
 	private int mTextStartX;
+	private int mForegroundStartX;
 
 	private int mDirection = DIRECTION_LEFT;
 	private static final int DIRECTION_LEFT = 0;
@@ -24,7 +26,7 @@ public class KTVTextView extends View
 	private int mTextSize = sp2px(30);
 
 	private int mTextOriginColor = Color.BLACK;
-	private int mTextChangeColor = Color.TRANSPARENT;
+	private int mTextChangeColor = Color.WHITE;
 	private int mForegroundOriginColor = Color.TRANSPARENT;
 	private int mForegroundChangeColor = Color.TRANSPARENT;
 
@@ -41,6 +43,18 @@ public class KTVTextView extends View
 	{
 		super(context, attrs);
 
+		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.KTVTextView);
+		mTextOriginColor = typedArray.getColor(R.styleable.KTVTextView_text_origin_color, mTextOriginColor);
+		mTextChangeColor = typedArray.getColor(R.styleable.KTVTextView_text_change_color, mTextChangeColor);
+		mForegroundOriginColor = typedArray.getColor(R.styleable.KTVTextView_foreground_origin_color, mForegroundOriginColor);
+		mForegroundChangeColor = typedArray.getColor(R.styleable.KTVTextView_foreground_change_color, mForegroundChangeColor);
+		mDirection = typedArray.getInt(R.styleable.KTVTextView_direction, mDirection);
+		mText = typedArray.getString(R.styleable.KTVTextView_text);
+		mTextSize = typedArray.getDimensionPixelOffset(R.styleable.KTVTextView_text_size, mTextSize);
+		mProgress = typedArray.getFloat(R.styleable.KTVTextView_progress, mProgress);
+		typedArray.recycle();
+		if (mText == null)
+			mText = KTVTextView.class.getSimpleName();
 		init();
 	}
 
@@ -72,6 +86,7 @@ public class KTVTextView extends View
 		setMeasuredDimension(width, height);
 
 		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
+		mForegroundStartX = 0;
 	}
 
 	private int measureHeight(int measureSpec)
@@ -145,12 +160,23 @@ public class KTVTextView extends View
 
 	private void drawChangeLeft(Canvas canvas, int r)
 	{
+		drawForeground(canvas, mForegroundChangeColor, mForegroundStartX, (int) (mForegroundStartX + mProgress * getWidth()));
 		drawText(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mProgress * mTextWidth));
 	}
 
 	private void drawOriginLeft(Canvas canvas, int r)
 	{
+		drawForeground(canvas, mForegroundOriginColor, (int) (mForegroundStartX + mProgress * getWidth()), mForegroundStartX + getWidth());
 		drawText(canvas, mTextOriginColor, (int) (mTextStartX + mProgress * mTextWidth), mTextStartX + mTextWidth);
+	}
+
+	private void drawForeground(Canvas canvas, int color, int startX, int endX)
+	{
+		mPaint.setColor(color);
+		canvas.save(Canvas.CLIP_SAVE_FLAG);
+		canvas.clipRect(startX, 0, endX, getMeasuredHeight());
+		canvas.drawRect(0, 0, getRight(), getBottom(), mPaint);
+		canvas.restore();
 	}
 
 	// 绘制的核心就在于利用mProgress和方向去计算应该clip的范围
