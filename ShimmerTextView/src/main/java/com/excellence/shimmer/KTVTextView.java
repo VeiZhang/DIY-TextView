@@ -85,6 +85,16 @@ public class KTVTextView extends View
 		typedArray.recycle();
 		if (mText == null)
 			mText = KTVTextView.class.getSimpleName();
+		if (mProgressable)
+			mViewStartX = mBackgroundHPadding;
+		correctProgress();
+	}
+
+	private void correctProgress()
+	{
+		// 保证最大为1即100%
+		if (mProgress > 1)
+			mProgress = 1;
 	}
 
 	@Override
@@ -158,7 +168,7 @@ public class KTVTextView extends View
 	{
 		super.onDraw(canvas);
 		// View进度宽度
-		int r = (int) (mProgress * mViewWidth + mViewStartX);
+		int r = (int) (mProgress * (mViewWidth - 2 * mBackgroundHPadding) + mViewStartX);
 
 		if (mDirection == DIRECTION_LEFT)
 		{
@@ -186,9 +196,10 @@ public class KTVTextView extends View
 	{
 		if (mProgressable)
 		{
-			drawForeground(canvas, mForegroundChangeColor, mViewStartX, (int) (mViewStartX + mProgress * mViewWidth));
+			int readlViewWidth = mViewWidth - 2 * mBackgroundHPadding;
+			drawForeground(canvas, mForegroundChangeColor, mViewStartX, (int) (mViewStartX + mProgress * readlViewWidth));
 			if (r >= mTextStartX && r <= mTextStartX + mTextWidth)
-				drawText(canvas, mTextChangeColor, mTextStartX, (int) (mViewStartX + mProgress * mViewWidth));
+				drawText(canvas, mTextChangeColor, mTextStartX, (int) (mViewStartX + mProgress * readlViewWidth));
 		}
 		else
 			drawText(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mProgress * mTextWidth));
@@ -198,9 +209,11 @@ public class KTVTextView extends View
 	{
 		if (mProgressable)
 		{
-			drawForeground(canvas, mForegroundOriginColor, (int) (mViewStartX + mProgress * getWidth()), mViewStartX + getWidth());
+			int readlViewWidth = mViewWidth - 2 * mBackgroundHPadding;
+			drawForeground(canvas, mForegroundOriginColor, (int) (mViewStartX + mProgress * readlViewWidth), mViewStartX + readlViewWidth);
+			// 三个阶段，全初色、半初色半改色、全改色
 			if (r >= mTextStartX && r <= mTextStartX + mTextWidth)
-				drawText(canvas, mTextOriginColor, (int) (mViewStartX + mProgress * getWidth()), mTextStartX + mTextWidth);
+				drawText(canvas, mTextOriginColor, (int) (mViewStartX + mProgress * readlViewWidth), mTextStartX + mTextWidth);
 			else if (r > mTextStartX + mTextWidth)
 				drawText(canvas, mTextChangeColor, mTextStartX, mTextStartX + mTextWidth);
 			else
@@ -212,10 +225,11 @@ public class KTVTextView extends View
 
 	private void drawForeground(Canvas canvas, int color, int startX, int endX)
 	{
+		// 有padding了，宽度和高度需要重新计算
 		mPaint.setColor(color);
 		canvas.save(Canvas.CLIP_SAVE_FLAG);
-		canvas.clipRect(startX, 0, endX, getMeasuredHeight());
-		canvas.drawRect(0, 0, getRight(), getBottom(), mPaint);
+		canvas.clipRect(startX, mBackgroundVPadding, endX, getMeasuredHeight() - mBackgroundVPadding);
+		canvas.drawRect(0, mBackgroundVPadding, getRight(), getBottom() - mBackgroundVPadding, mPaint);
 		canvas.restore();
 	}
 
@@ -242,6 +256,7 @@ public class KTVTextView extends View
 	public void setProgress(float progress)
 	{
 		mProgress = progress;
+		correctProgress();
 		invalidate();
 	}
 
