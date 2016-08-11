@@ -12,13 +12,13 @@ import android.view.View;
 /***
  * Created by ZhangWei on 2016/8/4.
  */
-public class KTVTextView extends View
+public class ColorTrackView extends View
 {
 	private int mDirection = DIRECTION_LEFT;
 	private static final int DIRECTION_LEFT = 0;
 	private static final int DIRECTION_RIGHT = 1;
 
-	private String mText = KTVTextView.class.getSimpleName();
+	private String mText = ColorTrackView.class.getSimpleName();
 	private Paint mPaint = null;
 	private int mTextSize = sp2px(30);
 
@@ -61,30 +61,30 @@ public class KTVTextView extends View
 	private int mBackgroundVPadding = 0;
 	private int mBackgroundHPadding = 0;
 
-	public KTVTextView(Context context)
+	public ColorTrackView(Context context)
 	{
 		super(context, null);
 	}
 
-	public KTVTextView(Context context, AttributeSet attrs)
+	public ColorTrackView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
-		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.KTVTextView);
-		mTextOriginColor = typedArray.getColor(R.styleable.KTVTextView_text_origin_color, mTextOriginColor);
-		mTextChangeColor = typedArray.getColor(R.styleable.KTVTextView_text_change_color, mTextChangeColor);
-		mForegroundOriginColor = typedArray.getColor(R.styleable.KTVTextView_foreground_origin_color, mForegroundOriginColor);
-		mForegroundChangeColor = typedArray.getColor(R.styleable.KTVTextView_foreground_change_color, mForegroundChangeColor);
-		mDirection = typedArray.getInt(R.styleable.KTVTextView_direction, mDirection);
-		mText = typedArray.getString(R.styleable.KTVTextView_text);
-		mTextSize = typedArray.getDimensionPixelOffset(R.styleable.KTVTextView_text_size, mTextSize);
-		mProgressable = typedArray.getBoolean(R.styleable.KTVTextView_progressable, mProgressable);
-		mProgress = typedArray.getFloat(R.styleable.KTVTextView_progress, mProgress);
-		mBackgroundHPadding = typedArray.getDimensionPixelOffset(R.styleable.KTVTextView_background_horizontal_padding, mBackgroundHPadding);
-		mBackgroundVPadding = typedArray.getDimensionPixelOffset(R.styleable.KTVTextView_background_vertical_padding, mBackgroundVPadding);
+		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ColorTrackView);
+		mTextOriginColor = typedArray.getColor(R.styleable.ColorTrackView_text_origin_color, mTextOriginColor);
+		mTextChangeColor = typedArray.getColor(R.styleable.ColorTrackView_text_change_color, mTextChangeColor);
+		mForegroundOriginColor = typedArray.getColor(R.styleable.ColorTrackView_foreground_origin_color, mForegroundOriginColor);
+		mForegroundChangeColor = typedArray.getColor(R.styleable.ColorTrackView_foreground_change_color, mForegroundChangeColor);
+		mDirection = typedArray.getInt(R.styleable.ColorTrackView_direction, mDirection);
+		mText = typedArray.getString(R.styleable.ColorTrackView_text);
+		mTextSize = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_text_size, mTextSize);
+		mProgressable = typedArray.getBoolean(R.styleable.ColorTrackView_progressable, mProgressable);
+		mProgress = typedArray.getFloat(R.styleable.ColorTrackView_progress, mProgress);
+		mBackgroundHPadding = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_background_horizontal_padding, mBackgroundHPadding);
+		mBackgroundVPadding = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_background_vertical_padding, mBackgroundVPadding);
 		typedArray.recycle();
 		if (mText == null)
-			mText = KTVTextView.class.getSimpleName();
+			mText = ColorTrackView.class.getSimpleName();
 		if (mProgressable)
 			mViewStartX = mBackgroundHPadding;
 		correctProgress();

@@ -33,7 +33,7 @@
         android:text="你是我的眼*******"
         android:textSize="35sp"/>
 
-    <com.excellence.shimmer.KTVTextView
+    <com.excellence.shimmer.ColorTrackView
         android:id="@+id/ktvtextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:foreground_origin_color="@color/colorAccent"
         app:progressable="true"/>
 
-    <com.excellence.shimmer.KTVTextView
+    <com.excellence.shimmer.ColorTrackView
         android:id="@+id/ktvtextview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
