@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="view_name">
+        <item>Gradient TextView</item>
+        <item>ColorTrack TextView</item>
+        <item>Lyric TextView</item>
+    </string-array>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.excellence.shimmer.MainActivity">
+
+    <com.excellence.shimmer.Widget.GradientShaderTextView
+        android:id="@+id/gradientshadertextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="你是我生命里的一首歌"
+        android:textSize="35sp">
+    </com.excellence.shimmer.Widget.GradientShaderTextView>
+
+    <com.excellence.shimmer.Widget.GradientTextView
+        android:id="@+id/gradienttextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="你是我生命里的一首歌"
+        android:textSize="35sp"/>
+</LinearLayout>
