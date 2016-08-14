@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -36,6 +37,7 @@ public class ColorTrackView extends View
 	 */
 	private boolean mProgressable = false;
 
+	private float mMaxProgress = 1;
 	private float mProgress = 0;
 	/**
 	 * 文字宽度
@@ -95,8 +97,8 @@ public class ColorTrackView extends View
 	private void correctProgress()
 	{
 		// 保证最大为1即100%
-		if (mProgress > 1)
-			mProgress = 1;
+		if (mProgress > mMaxProgress)
+			mProgress = mMaxProgress;
 	}
 
 	@Override
@@ -229,10 +231,18 @@ public class ColorTrackView extends View
 	{
 		// 有padding了，宽度和高度需要重新计算
 		mPaint.setColor(color);
+
+		// 方式一 绘图
 		canvas.save(Canvas.CLIP_SAVE_FLAG);
 		canvas.clipRect(startX, mBackgroundVPadding, endX, getMeasuredHeight() - mBackgroundVPadding);
-		canvas.drawRect(0, mBackgroundVPadding, getRight(), getBottom() - mBackgroundVPadding, mPaint);
+		RectF rectF = new RectF(0, mBackgroundVPadding, getRight(), getBottom() - mBackgroundVPadding);
+		canvas.drawRect(rectF, mPaint);
 		canvas.restore();
+
+		// 方式二
+		// canvas.drawRect(startX, mBackgroundVPadding, endX,
+		// getMeasuredHeight() - mBackgroundVPadding, mPaint);
+
 	}
 
 	// 绘制的核心就在于利用mProgress和方向去计算应该clip的范围
