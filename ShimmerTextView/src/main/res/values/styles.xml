@@ -19,7 +19,8 @@
         </attr>
         <attr name="text" format="string|reference"/>
         <attr name="text_size" format="dimension|reference"/>
-        <attr name="progress" format="float"/>
+        <attr name="max" format="integer"/>
+        <attr name="progress" format="integer"/>
         <attr name="progressable" format="boolean"/>
         <attr name="background_horizontal_padding" format="dimension|reference"/>
         <attr name="background_vertical_padding" format="dimension|reference"/>

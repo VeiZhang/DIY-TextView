@@ -17,6 +17,7 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 	private ColorTrackView mColorTrackView = null;
 	private ColorTrackView mColorTrackView1 = null;
 	private ColorTrackView mColorTrackView2 = null;
+	private ColorTrackView mColorTrackView3 = null;
 
 	@Override
 	protected void setTAG()
@@ -36,6 +37,7 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 		mColorTrackView = (ColorTrackView) findViewById(R.id.colortrackview);
 		mColorTrackView1 = (ColorTrackView) findViewById(R.id.colortrackview1);
 		mColorTrackView2 = (ColorTrackView) findViewById(R.id.colortrackview2);
+		mColorTrackView3 = (ColorTrackView) findViewById(R.id.colortrackview3);
 		mColorTrackView.postDelayed(mDrawRunnable, 50);
 		mColorTrackView2.setClickable(true);
 		mColorTrackView2.setFocusable(true);
@@ -46,10 +48,10 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 	@Override
 	public void onClick(View v)
 	{
-		if (mColorTrackView2.getProgress() >= 1)
+		if (mColorTrackView2.getProgress() >= mColorTrackView2.getMax())
 			mColorTrackView2.setProgress(0);
 		else
-			mColorTrackView2.setProgress(mColorTrackView2.getProgress() + 0.01f);
+			mColorTrackView2.setProgress(mColorTrackView2.getProgress() + 1);
 	}
 
 	private Runnable mDrawRunnable = new Runnable()
@@ -57,13 +59,15 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 		@Override
 		public void run()
 		{
-			if (mColorTrackView.getProgress() >= 1)
+			if (mColorTrackView.getProgress() >= mColorTrackView.getMax())
 			{
 				mColorTrackView.setProgress(0);
 				mColorTrackView1.setProgress(0);
+				mColorTrackView3.setProgress(0);
 			}
-			mColorTrackView.setProgress(mColorTrackView.getProgress() + 0.01f);
-			mColorTrackView1.setProgress(mColorTrackView1.getProgress() + 0.01f);
+			mColorTrackView.setProgress(mColorTrackView.getProgress() + 1);
+			mColorTrackView1.setProgress(mColorTrackView1.getProgress() + 1);
+			mColorTrackView3.setProgress(mColorTrackView3.getProgress() + 1);
 			mColorTrackView.postDelayed(mDrawRunnable, 50);
 		}
 	};

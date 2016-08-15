@@ -46,9 +46,22 @@
         app:background_horizontal_padding="20dp"
         app:background_vertical_padding="20dp"
         app:direction="left"
-        app:progress="0.5"
+        app:progress="50"
         app:text="Click点击自增进度"
         app:text_change_color="@color/colorAccent"
+        app:text_origin_color="@color/blue"/>
+
+    <com.excellence.shimmer.Widget.ColorTrackView
+        android:id="@+id/colortrackview3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="30dp"
+        app:direction="right"
+        app:foreground_change_color="@color/blue"
+        app:foreground_origin_color="@color/white"
+        app:progressable="true"
+        app:text_change_color="@color/white"
         app:text_origin_color="@color/blue"/>
 
 </LinearLayout>

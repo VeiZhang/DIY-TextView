@@ -37,7 +37,16 @@ public class ColorTrackView extends View
 	 */
 	private boolean mProgressable = false;
 
-	private float mMaxProgress = 1;
+	/**
+	 * 设置以及默认progress、max
+	 */
+
+	private int mDefaultMax = 100;
+	private int mDefaultProgress = 0;
+
+	/**
+	 * 绘制进度
+	 */
 	private float mProgress = 0;
 	/**
 	 * 文字宽度
@@ -83,7 +92,8 @@ public class ColorTrackView extends View
 		mText = typedArray.getString(R.styleable.ColorTrackView_text);
 		mTextSize = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_text_size, mTextSize);
 		mProgressable = typedArray.getBoolean(R.styleable.ColorTrackView_progressable, mProgressable);
-		mProgress = typedArray.getFloat(R.styleable.ColorTrackView_progress, mProgress);
+		mDefaultMax = typedArray.getInt(R.styleable.ColorTrackView_max, mDefaultMax);
+		mDefaultProgress = typedArray.getInt(R.styleable.ColorTrackView_progress, mDefaultProgress);
 		mBackgroundHPadding = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_background_horizontal_padding, mBackgroundHPadding);
 		mBackgroundVPadding = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_background_vertical_padding, mBackgroundVPadding);
 		typedArray.recycle();
@@ -97,8 +107,10 @@ public class ColorTrackView extends View
 	private void correctProgress()
 	{
 		// 保证最大为1即100%
-		if (mProgress > mMaxProgress)
-			mProgress = mMaxProgress;
+		if (mDefaultProgress > mDefaultMax)
+			mDefaultProgress = mDefaultMax;
+
+		mProgress = (float) mDefaultProgress / mDefaultMax;
 	}
 
 	@Override
@@ -265,15 +277,40 @@ public class ColorTrackView extends View
 		return (int) (size * scale + 0.5f);
 	}
 
-	public void setProgress(float progress)
+	public void setProgress(int progress)
 	{
-		mProgress = progress;
+		mDefaultProgress = progress;
 		correctProgress();
 		invalidate();
 	}
 
-	public float getProgress()
+	public int getProgress()
 	{
-		return mProgress;
+		return mDefaultProgress;
+	}
+
+	public float getMax()
+	{
+		return mDefaultMax;
+	}
+
+	public void setMax(int max)
+	{
+		mDefaultMax = max;
+	}
+
+	public String getText()
+	{
+		return mText;
+	}
+
+	public void setText(String text)
+	{
+		mText = mText;
+	}
+
+	public void setText(int strId)
+	{
+		mText = getResources().getString(strId);
 	}
 }
