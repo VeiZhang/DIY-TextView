@@ -1,11 +1,13 @@
 package com.excellence.shimmer.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.excellence.shimmer.MainActivity;
 import com.excellence.shimmer.R;
 import com.excellence.shimmer.Widget.ColorTrackView;
 
@@ -43,15 +45,27 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 		mColorTrackView2.setFocusable(true);
 		mColorTrackView2.setOnClickListener(this);
 		mColorTrackView2.setOnKeyListener(this);
+		mColorTrackView3.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v)
 	{
-		if (mColorTrackView2.getProgress() >= mColorTrackView2.getMax())
-			mColorTrackView2.setProgress(0);
-		else
-			mColorTrackView2.setProgress(mColorTrackView2.getProgress() + 1);
+		switch (v.getId())
+		{
+		case R.id.colortrackview2:
+			if (mColorTrackView2.getProgress() >= mColorTrackView2.getMax())
+				mColorTrackView2.setProgress(0);
+			else
+				mColorTrackView2.setProgress(mColorTrackView2.getProgress() + 1);
+			break;
+
+		case R.id.colortrackview3:
+			Intent intent = new Intent(getActivity(), MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			break;
+		}
 	}
 
 	private Runnable mDrawRunnable = new Runnable()

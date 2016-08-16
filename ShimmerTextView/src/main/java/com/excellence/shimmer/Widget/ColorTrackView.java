@@ -110,7 +110,16 @@ public class ColorTrackView extends View
 		if (mProgress > mMax)
 			mProgress = mMax;
 
-		mMiniProgress = (float) mProgress / mMax;
+		switch (mDirection)
+		{
+		case DIRECTION_LEFT:
+			mMiniProgress = (float) mProgress / mMax;
+			break;
+
+		case DIRECTION_RIGHT:
+			mMiniProgress = (float) (mMax - mProgress) / mMax;
+			break;
+		}
 	}
 
 	@Override
@@ -186,16 +195,8 @@ public class ColorTrackView extends View
 		// View进度宽度
 		int r = (int) (mMiniProgress * (mViewWidth - 2 * mBackgroundHPadding) + mViewStartX);
 
-		if (mDirection == DIRECTION_LEFT)
-		{
-			drawChangeLeft(canvas, r);
-			drawOriginLeft(canvas, r);
-		}
-		else
-		{
-			drawOriginRight(canvas, r);
-			drawChangeRight(canvas, r);
-		}
+		drawHorizontalChange(canvas, r);
+		drawHorizontalOrigin(canvas, r);
 	}
 
 	private void drawChangeRight(Canvas canvas, int r)
@@ -208,7 +209,7 @@ public class ColorTrackView extends View
 		drawText(canvas, mTextOriginColor, mTextStartX, (int) (mTextStartX + (1 - mMiniProgress) * mTextWidth));
 	}
 
-	private void drawChangeLeft(Canvas canvas, int r)
+	private void drawHorizontalChange(Canvas canvas, int r)
 	{
 		if (mProgressable)
 		{
@@ -221,7 +222,7 @@ public class ColorTrackView extends View
 			drawText(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mMiniProgress * mTextWidth));
 	}
 
-	private void drawOriginLeft(Canvas canvas, int r)
+	private void drawHorizontalOrigin(Canvas canvas, int r)
 	{
 		if (mProgressable)
 		{
