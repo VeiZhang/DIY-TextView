@@ -15,13 +15,13 @@ import com.excellence.shimmer.R;
 /***
  * Created by ZhangWei on 2016/8/4.
  */
-public class ColorTrackView extends View
+public class CornersColorTrackView extends View
 {
 	private int mDirection = DIRECTION_LEFT;
 	private static final int DIRECTION_LEFT = 0;
 	private static final int DIRECTION_RIGHT = 1;
 
-	private String mText = ColorTrackView.class.getSimpleName();
+	private String mText = CornersColorTrackView.class.getSimpleName();
 	private Paint mPaint = null;
 	private int mTextSize = sp2px(30);
 
@@ -74,12 +74,12 @@ public class ColorTrackView extends View
 	private int mBackgroundVPadding = 0;
 	private int mBackgroundHPadding = 0;
 
-	public ColorTrackView(Context context)
+	public CornersColorTrackView(Context context)
 	{
 		super(context, null);
 	}
 
-	public ColorTrackView(Context context, AttributeSet attrs)
+	public CornersColorTrackView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
@@ -98,7 +98,7 @@ public class ColorTrackView extends View
 		mBackgroundVPadding = typedArray.getDimensionPixelOffset(R.styleable.ColorTrackView_background_vertical_padding, mBackgroundVPadding);
 		typedArray.recycle();
 		if (mText == null)
-			mText = ColorTrackView.class.getSimpleName();
+			mText = CornersColorTrackView.class.getSimpleName();
 		if (mProgressable)
 			mViewStartX = mBackgroundHPadding;
 		correctProgress();
