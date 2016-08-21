@@ -20,6 +20,13 @@ public class ColorTrackView extends View
 	private int mDirection = DIRECTION_LEFT;
 	private static final int DIRECTION_LEFT = 0;
 	private static final int DIRECTION_RIGHT = 1;
+	private static final int DIRECTION_TOP = 2;
+	private static final int DIRECTION_BOTTOM = 3;
+
+	public enum Direction
+	{
+		LEFT, RIGHT, TOP, BOTTOM;
+	}
 
 	private String mText = ColorTrackView.class.getSimpleName();
 	private Paint mPaint = null;
@@ -113,10 +120,12 @@ public class ColorTrackView extends View
 		switch (mDirection)
 		{
 		case DIRECTION_LEFT:
+		case DIRECTION_TOP:
 			mMiniProgress = (float) mProgress / mMax;
 			break;
 
 		case DIRECTION_RIGHT:
+		case DIRECTION_BOTTOM:
 			mMiniProgress = (float) (mMax - mProgress) / mMax;
 			break;
 		}
@@ -129,8 +138,6 @@ public class ColorTrackView extends View
 		int width = measureWidth(widthMeasureSpec);
 		int height = measureHeight(heightMeasureSpec);
 		setMeasuredDimension(width, height);
-		mViewWidth = getMeasuredWidth();
-		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
 	}
 
 	private void init()
@@ -145,6 +152,8 @@ public class ColorTrackView extends View
 	{
 		mTextWidth = (int) mPaint.measureText(mText);
 		mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
+		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
+		mViewWidth = getMeasuredWidth();
 	}
 
 	private int measureHeight(int measureSpec)
@@ -192,11 +201,21 @@ public class ColorTrackView extends View
 	protected void onDraw(Canvas canvas)
 	{
 		super.onDraw(canvas);
-		// View进度宽度
-		int r = (int) (mMiniProgress * (mViewWidth - 2 * mBackgroundHPadding) + mViewStartX);
+		switch (mDirection)
+		{
+		case DIRECTION_LEFT:
+		case DIRECTION_RIGHT:
+			// View横向进度宽度
+			int r = (int) (mMiniProgress * (mViewWidth - 2 * mBackgroundHPadding) + mViewStartX);
+			drawHorizontalChange(canvas, r);
+			drawHorizontalOrigin(canvas, r);
+			break;
 
-		drawHorizontalChange(canvas, r);
-		drawHorizontalOrigin(canvas, r);
+		case DIRECTION_TOP:
+		case DIRECTION_BOTTOM:
+			// View纵向进度宽度
+			break;
+		}
 	}
 
 	private void drawChangeRight(Canvas canvas, int r)
@@ -307,11 +326,13 @@ public class ColorTrackView extends View
 
 	public void setText(String text)
 	{
-		mText = mText;
+		mText = text;
+		measureText();
 	}
 
 	public void setText(int strId)
 	{
 		mText = getResources().getString(strId);
+		measureText();
 	}
 }
