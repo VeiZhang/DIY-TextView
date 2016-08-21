@@ -21,6 +21,11 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 	private ColorTrackView mColorTrackView2 = null;
 	private ColorTrackView mColorTrackView3 = null;
 
+	private ColorTrackView mColorTrackView4 = null;
+	private ColorTrackView mColorTrackView5 = null;
+	private ColorTrackView mColorTrackView6 = null;
+	private ColorTrackView mColorTrackView7 = null;
+
 	@Override
 	protected void setTAG()
 	{
@@ -40,12 +45,25 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 		mColorTrackView1 = (ColorTrackView) findViewById(R.id.colortrackview1);
 		mColorTrackView2 = (ColorTrackView) findViewById(R.id.colortrackview2);
 		mColorTrackView3 = (ColorTrackView) findViewById(R.id.colortrackview3);
+
+		mColorTrackView4 = (ColorTrackView) findViewById(R.id.colortrackview4);
+		mColorTrackView5 = (ColorTrackView) findViewById(R.id.colortrackview5);
+		mColorTrackView6 = (ColorTrackView) findViewById(R.id.colortrackview6);
+		mColorTrackView7 = (ColorTrackView) findViewById(R.id.colortrackview7);
+
 		mColorTrackView.postDelayed(mDrawRunnable, 50);
-		mColorTrackView2.setClickable(true);
-		mColorTrackView2.setFocusable(true);
-		mColorTrackView2.setOnClickListener(this);
-		mColorTrackView2.setOnKeyListener(this);
-		mColorTrackView3.setOnClickListener(this);
+
+		setListener(mColorTrackView2);
+		setListener(mColorTrackView6);
+	}
+
+	private void setListener(ColorTrackView view)
+	{
+		view.setClickable(true);
+		view.setFocusable(true);
+		view.setOnClickListener(this);
+		view.setOnKeyListener(this);
+		view.setOnClickListener(this);
 	}
 
 	@Override
@@ -60,10 +78,11 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 				mColorTrackView2.setProgress(mColorTrackView2.getProgress() + 1);
 			break;
 
-		case R.id.colortrackview3:
-			Intent intent = new Intent(getActivity(), MainActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(intent);
+		case R.id.colortrackview6:
+			if (mColorTrackView6.getProgress() >= mColorTrackView6.getMax())
+				mColorTrackView6.setProgress(0);
+			else
+				mColorTrackView6.setProgress(mColorTrackView6.getProgress() + 1);
 			break;
 		}
 	}
@@ -78,10 +97,17 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 				mColorTrackView.setProgress(0);
 				mColorTrackView1.setProgress(0);
 				mColorTrackView3.setProgress(0);
+				mColorTrackView4.setProgress(0);
+				mColorTrackView5.setProgress(0);
+				mColorTrackView7.setProgress(0);
 			}
 			mColorTrackView.setProgress(mColorTrackView.getProgress() + 1);
 			mColorTrackView1.setProgress(mColorTrackView1.getProgress() + 1);
 			mColorTrackView3.setProgress(mColorTrackView3.getProgress() + 1);
+			mColorTrackView4.setProgress(mColorTrackView4.getProgress() + 1);
+			mColorTrackView5.setProgress(mColorTrackView5.getProgress() + 1);
+			mColorTrackView7.setProgress(mColorTrackView7.getProgress() + 1);
+
 			mColorTrackView.postDelayed(mDrawRunnable, 50);
 		}
 	};

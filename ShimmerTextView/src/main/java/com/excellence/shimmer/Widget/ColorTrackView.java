@@ -56,24 +56,28 @@ public class ColorTrackView extends View
 	 */
 	private float mMiniProgress = 0;
 	/**
-	 * 文字宽度
+	 * 文字宽度、高度
 	 */
 	private int mTextWidth;
+	private int mTextHeight;
 
 	/**
-	 * 整个View宽度
+	 * 整个View宽度、高度
 	 */
 	private int mViewWidth;
+	private int mViewHeight;
 
 	/**
-	 * 文字进度初始宽度
+	 * 文字进度初始宽度、高度
 	 */
 	private int mTextStartX = 0;
+	private int mTextStartY = 0;
 
 	/**
-	 * 整个View进度初始宽度
+	 * 整个View进度初始宽度、高度
 	 */
 	private int mViewStartX = 0;
+	private int mViewStartY = 0;
 
 	/**
 	 * 横向纵向保留背景图片的padding 由于图片有光晕的情况
@@ -107,7 +111,10 @@ public class ColorTrackView extends View
 		if (mText == null)
 			mText = ColorTrackView.class.getSimpleName();
 		if (mProgressable)
+		{
 			mViewStartX = mBackgroundHPadding;
+			mViewStartY = mBackgroundVPadding;
+		}
 		correctProgress();
 	}
 
@@ -150,10 +157,16 @@ public class ColorTrackView extends View
 
 	private void measureText()
 	{
-		mTextWidth = (int) mPaint.measureText(mText);
+		// 横向
 		mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
+		mTextWidth = (int) mPaint.measureText(mText);
 		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
 		mViewWidth = getMeasuredWidth();
+
+		// 纵向
+		mTextHeight = mTextBound.height();
+		mTextStartY = getMeasuredHeight() / 2 - mTextHeight / 2;
+		mViewHeight = getMeasuredHeight();
 	}
 
 	private int measureHeight(int measureSpec)
@@ -206,60 +219,85 @@ public class ColorTrackView extends View
 		case DIRECTION_LEFT:
 		case DIRECTION_RIGHT:
 			// View横向进度宽度
-			int r = (int) (mMiniProgress * (mViewWidth - 2 * mBackgroundHPadding) + mViewStartX);
-			drawHorizontalChange(canvas, r);
-			drawHorizontalOrigin(canvas, r);
+			int rx = (int) (mMiniProgress * (mViewWidth - 2 * mBackgroundHPadding) + mViewStartX);
+			drawChangeX(canvas, rx);
+			drawOriginX(canvas, rx);
 			break;
 
 		case DIRECTION_TOP:
 		case DIRECTION_BOTTOM:
 			// View纵向进度宽度
+			int ry = (int) (mMiniProgress * (mViewHeight - 2 * mBackgroundVPadding) + mViewStartY);
+			drawChangeY(canvas, ry);
+			drawOriginY(canvas, ry);
 			break;
 		}
 	}
 
-	private void drawChangeRight(Canvas canvas, int r)
-	{
-		drawText(canvas, mTextChangeColor, (int) (mTextStartX + (1 - mMiniProgress) * mTextWidth), mTextStartX + mTextWidth);
-	}
-
-	private void drawOriginRight(Canvas canvas, int r)
-	{
-		drawText(canvas, mTextOriginColor, mTextStartX, (int) (mTextStartX + (1 - mMiniProgress) * mTextWidth));
-	}
-
-	private void drawHorizontalChange(Canvas canvas, int r)
+	private void drawChangeX(Canvas canvas, int r)
 	{
 		if (mProgressable)
 		{
 			int readlViewWidth = mViewWidth - 2 * mBackgroundHPadding;
-			drawForeground(canvas, mForegroundChangeColor, mViewStartX, (int) (mViewStartX + mMiniProgress * readlViewWidth));
+			drawForegroundX(canvas, mForegroundChangeColor, mViewStartX, (int) (mViewStartX + mMiniProgress * readlViewWidth));
 			if (r >= mTextStartX && r <= mTextStartX + mTextWidth)
-				drawText(canvas, mTextChangeColor, mTextStartX, (int) (mViewStartX + mMiniProgress * readlViewWidth));
+				drawTextX(canvas, mTextChangeColor, mTextStartX, (int) (mViewStartX + mMiniProgress * readlViewWidth));
 		}
 		else
-			drawText(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mMiniProgress * mTextWidth));
+			drawTextX(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mMiniProgress * mTextWidth));
 	}
 
-	private void drawHorizontalOrigin(Canvas canvas, int r)
+	private void drawOriginX(Canvas canvas, int r)
 	{
 		if (mProgressable)
 		{
 			int readlViewWidth = mViewWidth - 2 * mBackgroundHPadding;
-			drawForeground(canvas, mForegroundOriginColor, (int) (mViewStartX + mMiniProgress * readlViewWidth), mViewStartX + readlViewWidth);
-			// 三个阶段，全初色、半初色半改色、全改色
+			drawForegroundX(canvas, mForegroundOriginColor, (int) (mViewStartX + mMiniProgress * readlViewWidth), mViewStartX + readlViewWidth);
+			// 文字三个阶段，全初色、半初色半改色、全改色
 			if (r >= mTextStartX && r <= mTextStartX + mTextWidth)
-				drawText(canvas, mTextOriginColor, (int) (mViewStartX + mMiniProgress * readlViewWidth), mTextStartX + mTextWidth);
+				drawTextX(canvas, mTextOriginColor, (int) (mViewStartX + mMiniProgress * readlViewWidth), mTextStartX + mTextWidth);
 			else if (r > mTextStartX + mTextWidth)
-				drawText(canvas, mTextChangeColor, mTextStartX, mTextStartX + mTextWidth);
+				drawTextX(canvas, mTextChangeColor, mTextStartX, mTextStartX + mTextWidth);
 			else
-				drawText(canvas, mTextOriginColor, mTextStartX, mTextStartX + mTextWidth);
+				drawTextX(canvas, mTextOriginColor, mTextStartX, mTextStartX + mTextWidth);
 		}
 		else
-			drawText(canvas, mTextOriginColor, (int) (mTextStartX + mMiniProgress * mTextWidth), mTextStartX + mTextWidth);
+			drawTextX(canvas, mTextOriginColor, (int) (mTextStartX + mMiniProgress * mTextWidth), mTextStartX + mTextWidth);
 	}
 
-	private void drawForeground(Canvas canvas, int color, int startX, int endX)
+	private void drawChangeY(Canvas canvas, int r)
+	{
+		if (mProgressable)
+		{
+			int readlViewHeight = mViewHeight - 2 * mBackgroundVPadding;
+			drawForegroundY(canvas, mForegroundChangeColor, mViewStartY, (int) (mViewStartY + mMiniProgress * readlViewHeight));
+			if (r >= mTextStartY && r <= mTextStartY + mTextHeight)
+				drawTextY(canvas, mTextChangeColor, mTextStartY, (int) (mViewStartY + mMiniProgress * readlViewHeight));
+		}
+		else
+			drawTextY(canvas, mTextChangeColor, mTextStartY, (int) (mTextStartY + mMiniProgress * mTextHeight));
+	}
+
+	private void drawOriginY(Canvas canvas, int r)
+	{
+		if (mProgressable)
+		{
+			int readlViewHeight = mViewHeight - 2 * mBackgroundVPadding;
+			drawForegroundY(canvas, mForegroundOriginColor, (int) (mViewStartY + mMiniProgress * readlViewHeight), mViewStartY + readlViewHeight);
+			// 文字三个阶段，全初色、半初色半改色、全改色
+			if (r >= mTextStartY && r <= mTextStartY + mTextHeight)
+				drawTextY(canvas, mTextOriginColor, (int) (mViewStartY + mMiniProgress * readlViewHeight), mTextStartY + mTextHeight);
+			else if (r > mTextStartY + mTextHeight)
+				drawTextY(canvas, mTextChangeColor, mTextStartY, mTextStartY + mTextHeight);
+			else
+				drawTextY(canvas, mTextOriginColor, mTextStartY, mTextStartY + mTextHeight);
+		}
+		else
+			drawTextY(canvas, mTextOriginColor, (int) (mTextStartY + mMiniProgress * mTextHeight), mTextStartY + mTextHeight);
+
+	}
+
+	private void drawForegroundX(Canvas canvas, int color, int startX, int endX)
 	{
 		// 有padding了，宽度和高度需要重新计算
 		mPaint.setColor(color);
@@ -278,7 +316,7 @@ public class ColorTrackView extends View
 	}
 
 	// 绘制的核心就在于利用mProgress和方向去计算应该clip的范围
-	private void drawText(Canvas canvas, int color, int startX, int endX)
+	private void drawTextX(Canvas canvas, int color, int startX, int endX)
 	{
 		mPaint.setColor(color);
 		// 需要还原Clip
@@ -288,6 +326,25 @@ public class ColorTrackView extends View
 		canvas.clipRect(startX, 0, endX, getMeasuredHeight());
 		canvas.drawText(mText, mTextStartX, getMeasuredHeight() / 2 - ((mPaint.descent() + mPaint.ascent()) / 2), mPaint);
 		// restore()最后要将画布回复原来的数据（记住save()跟restore()要配对使用）
+		canvas.restore();
+	}
+
+	private void drawForegroundY(Canvas canvas, int color, int startY, int endY)
+	{
+		mPaint.setColor(color);
+		canvas.save(Canvas.CLIP_SAVE_FLAG);
+		canvas.clipRect(mBackgroundHPadding, startY, getMeasuredWidth() - mBackgroundHPadding, endY);
+		RectF rectF = new RectF(mBackgroundHPadding, 0, getRight() - mBackgroundHPadding, getBottom());
+		canvas.drawRect(rectF, mPaint);
+		canvas.restore();
+	}
+
+	private void drawTextY(Canvas canvas, int color, int startY, int endY)
+	{
+		mPaint.setColor(color);
+		canvas.save(Canvas.CLIP_SAVE_FLAG);
+		canvas.clipRect(0, startY, getMeasuredWidth(), endY);
+		canvas.drawText(mText, mTextStartX, getMeasuredHeight() / 2 - ((mPaint.descent() + mPaint.ascent()) / 2), mPaint);
 		canvas.restore();
 	}
 
