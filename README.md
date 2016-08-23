@@ -2,4 +2,4 @@
 Custom Textview
 
 1.ShimmerTextView
-![image]( MyTextView/ShimmerTextView/src/main/assets/shimmer.gif)
+![image]( https://github.com/VeiZhang/MyTextView/blob/master/ShimmerTextView/src/main/assets/shimmer.gif)
