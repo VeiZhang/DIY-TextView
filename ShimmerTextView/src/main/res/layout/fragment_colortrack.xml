@@ -138,4 +138,25 @@
             app:text_origin_color="@color/blue"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.excellence.shimmer.Widget.ColorTrackProgressView
+            android:id="@+id/progress_view"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:progressDrawable="@drawable/progress_drawable"
+            app:txt="hello world"
+            app:txt_change_color="@color/blue"
+            app:txt_origin_color="@color/white"/>
+    </LinearLayout>
+
 </LinearLayout>

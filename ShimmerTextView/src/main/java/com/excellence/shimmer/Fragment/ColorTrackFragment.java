@@ -1,14 +1,13 @@
 package com.excellence.shimmer.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.excellence.shimmer.MainActivity;
 import com.excellence.shimmer.R;
+import com.excellence.shimmer.Widget.ColorTrackProgressView;
 import com.excellence.shimmer.Widget.ColorTrackView;
 
 /**
@@ -25,6 +24,8 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 	private ColorTrackView mColorTrackView5 = null;
 	private ColorTrackView mColorTrackView6 = null;
 	private ColorTrackView mColorTrackView7 = null;
+
+	private ColorTrackProgressView mColorTrackProgressView = null;
 
 	@Override
 	protected void setTAG()
@@ -50,6 +51,8 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 		mColorTrackView5 = (ColorTrackView) findViewById(R.id.colortrackview5);
 		mColorTrackView6 = (ColorTrackView) findViewById(R.id.colortrackview6);
 		mColorTrackView7 = (ColorTrackView) findViewById(R.id.colortrackview7);
+
+		mColorTrackProgressView = (ColorTrackProgressView) findViewById(R.id.progress_view);
 
 		mColorTrackView.postDelayed(mDrawRunnable, 50);
 
@@ -100,6 +103,7 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 				mColorTrackView4.setProgress(0);
 				mColorTrackView5.setProgress(0);
 				mColorTrackView7.setProgress(0);
+				mColorTrackProgressView.setProgress(0);
 			}
 			mColorTrackView.setProgress(mColorTrackView.getProgress() + 1);
 			mColorTrackView1.setProgress(mColorTrackView1.getProgress() + 1);
@@ -107,6 +111,7 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 			mColorTrackView4.setProgress(mColorTrackView4.getProgress() + 1);
 			mColorTrackView5.setProgress(mColorTrackView5.getProgress() + 1);
 			mColorTrackView7.setProgress(mColorTrackView7.getProgress() + 1);
+			mColorTrackProgressView.setProgress(mColorTrackProgressView.getProgress() + 1);
 
 			mColorTrackView.postDelayed(mDrawRunnable, 50);
 		}

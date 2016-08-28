@@ -28,4 +28,10 @@
         <attr name="background_vertical_padding" format="dimension|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="ColorTrackProgressView">
+        <attr name="txt" format="string|reference"/>
+        <attr name="txt_size" format="dimension|reference"/>
+        <attr name="txt_origin_color" format="color|reference"/>
+        <attr name="txt_change_color" format="color|reference"/>
+    </declare-styleable>
 </resources>

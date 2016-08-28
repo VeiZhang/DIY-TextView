@@ -87,7 +87,7 @@ public class ColorTrackView extends View
 
 	public ColorTrackView(Context context)
 	{
-		super(context, null);
+		this(context, null);
 	}
 
 	public ColorTrackView(Context context, AttributeSet attrs)
