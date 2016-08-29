@@ -179,7 +179,6 @@ public class ColorTrackView extends View
 		{
 		case MeasureSpec.EXACTLY:
 			result = val;
-			System.out.println("result ------ " + result);
 			break;
 
 		case MeasureSpec.AT_MOST:
