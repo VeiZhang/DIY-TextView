@@ -62,69 +62,22 @@ public class ColorTrackProgressView extends ProgressBar
 	@Override
 	protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
 	{
-		// super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		init();
-		int width = measureWidth(widthMeasureSpec);
-		int height = measureHeight(heightMeasureSpec);
-		setMeasuredDimension(width, height);
-	}
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-	private void init()
-	{
-		// 抗锯齿
-		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaint.setTextSize(mTextSize);
 		measureText();
 	}
 
 	private void measureText()
 	{
+		// 抗锯齿
+		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaint.setTextSize(mTextSize);
+
 		// 横向
 		mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
 		mTextWidth = (int) mPaint.measureText(mText);
 		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
 		mViewWidth = getMeasuredWidth();
-	}
-
-	private int measureHeight(int measureSpec)
-	{
-		int mode = MeasureSpec.getMode(measureSpec);
-		int val = MeasureSpec.getSize(measureSpec);
-		int result = 0;
-		switch (mode)
-		{
-		case MeasureSpec.EXACTLY:
-			result = val;
-			break;
-
-		case MeasureSpec.AT_MOST:
-		case MeasureSpec.UNSPECIFIED:
-			result = mTextBound.height() + getPaddingTop() + getPaddingBottom();
-			break;
-		}
-		result = mode == MeasureSpec.AT_MOST ? Math.min(result, val) : result;
-		return result + getPaddingTop() + getPaddingBottom();
-	}
-
-	private int measureWidth(int measureSpec)
-	{
-		int mode = MeasureSpec.getMode(measureSpec);
-		int val = MeasureSpec.getSize(measureSpec);
-		int result = 0;
-		switch (mode)
-		{
-		case MeasureSpec.EXACTLY:
-			result = val;
-			break;
-
-		case MeasureSpec.AT_MOST:
-		case MeasureSpec.UNSPECIFIED:
-			// result = mTextBound.width();
-			result = mTextWidth + getPaddingLeft() + getPaddingRight();
-			break;
-		}
-		result = mode == MeasureSpec.AT_MOST ? Math.min(result, val) : result;
-		return result + getPaddingLeft() + getPaddingRight();
 	}
 
 	@Override

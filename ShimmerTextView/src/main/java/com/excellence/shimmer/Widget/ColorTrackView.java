@@ -141,32 +141,33 @@ public class ColorTrackView extends View
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
 	{
-		init();
+		measureText();
+
 		int width = measureWidth(widthMeasureSpec);
 		int height = measureHeight(heightMeasureSpec);
 		setMeasuredDimension(width, height);
-	}
 
-	private void init()
-	{
-		// 抗锯齿
-		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaint.setTextSize(mTextSize);
-		measureText();
-	}
-
-	private void measureText()
-	{
+		//要先测量后才能getMeasuredWidth()、getMeasuredHeight()
 		// 横向
-		mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
-		mTextWidth = (int) mPaint.measureText(mText);
 		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
 		mViewWidth = getMeasuredWidth();
 
 		// 纵向
-		mTextHeight = mTextBound.height();
 		mTextStartY = getMeasuredHeight() / 2 - mTextHeight / 2;
 		mViewHeight = getMeasuredHeight();
+	}
+
+	private void measureText()
+	{
+		// 抗锯齿
+		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaint.setTextSize(mTextSize);
+		// 横向
+		mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
+		mTextWidth = (int) mPaint.measureText(mText);
+
+		// 纵向
+		mTextHeight = mTextBound.height();
 	}
 
 	private int measureHeight(int measureSpec)
@@ -178,15 +179,16 @@ public class ColorTrackView extends View
 		{
 		case MeasureSpec.EXACTLY:
 			result = val;
+			System.out.println("result ------ " + result);
 			break;
 
 		case MeasureSpec.AT_MOST:
 		case MeasureSpec.UNSPECIFIED:
-			result = mTextBound.height();
+			result = mTextBound.height() + getPaddingTop() + getPaddingBottom();
 			break;
 		}
 		result = mode == MeasureSpec.AT_MOST ? Math.min(result, val) : result;
-		return result + getPaddingTop() + getPaddingBottom();
+		return result;
 	}
 
 	private int measureWidth(int measureSpec)
@@ -203,11 +205,11 @@ public class ColorTrackView extends View
 		case MeasureSpec.AT_MOST:
 		case MeasureSpec.UNSPECIFIED:
 			// result = mTextBound.width();
-			result = mTextWidth;
+			result = mTextWidth + + getPaddingLeft() + getPaddingRight();
 			break;
 		}
 		result = mode == MeasureSpec.AT_MOST ? Math.min(result, val) : result;
-		return result + getPaddingLeft() + getPaddingRight();
+		return result;
 	}
 
 	@Override

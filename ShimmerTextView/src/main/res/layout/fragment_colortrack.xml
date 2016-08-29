@@ -60,7 +60,7 @@
 
         <com.excellence.shimmer.Widget.ColorTrackView
             android:id="@+id/colortrackview3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:focusable="true"
@@ -149,7 +149,7 @@
         <com.excellence.shimmer.Widget.ColorTrackProgressView
             android:id="@+id/progress_view"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
