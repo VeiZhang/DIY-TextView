@@ -52,6 +52,8 @@ public class ColorTrackProgressView extends ProgressBar
 		if (mText == null)
 			mText = ColorTrackProgressView.class.getSimpleName();
 		setTextProgress();
+		// 抗锯齿
+		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	}
 
 	private void setTextProgress()
@@ -69,8 +71,6 @@ public class ColorTrackProgressView extends ProgressBar
 
 	private void measureText()
 	{
-		// 抗锯齿
-		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setTextSize(mTextSize);
 
 		// 横向
@@ -129,5 +129,24 @@ public class ColorTrackProgressView extends ProgressBar
 	{
 		super.setProgress(progress);
 		setTextProgress();
+	}
+
+	public String getText()
+	{
+		return mText;
+	}
+
+	public void setText(String text)
+	{
+		mText = text;
+		measureText();
+		invalidate();
+	}
+
+	public void setText(int strId)
+	{
+		mText = getResources().getString(strId);
+		measureText();
+		invalidate();
 	}
 }

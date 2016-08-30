@@ -147,7 +147,15 @@ public class ColorTrackView extends View
 		int height = measureHeight(heightMeasureSpec);
 		setMeasuredDimension(width, height);
 
-		//要先测量后才能getMeasuredWidth()、getMeasuredHeight()
+		init();
+	}
+
+	/**
+	 * 设立初始值
+	 */
+	private void init()
+	{
+		// 要先测量后才能getMeasuredWidth()、getMeasuredHeight()
 		// 横向
 		mTextStartX = getMeasuredWidth() / 2 - mTextWidth / 2;
 		mViewWidth = getMeasuredWidth();
@@ -204,7 +212,7 @@ public class ColorTrackView extends View
 		case MeasureSpec.AT_MOST:
 		case MeasureSpec.UNSPECIFIED:
 			// result = mTextBound.width();
-			result = mTextWidth + + getPaddingLeft() + getPaddingRight();
+			result = mTextWidth + +getPaddingLeft() + getPaddingRight();
 			break;
 		}
 		result = mode == MeasureSpec.AT_MOST ? Math.min(result, val) : result;
@@ -386,11 +394,13 @@ public class ColorTrackView extends View
 	{
 		mText = text;
 		measureText();
+		init();
 	}
 
 	public void setText(int strId)
 	{
 		mText = getResources().getString(strId);
 		measureText();
+		init();
 	}
 }

@@ -15,6 +15,8 @@ import com.excellence.shimmer.Widget.ColorTrackView;
  */
 public class ColorTrackFragment extends BaseFragment implements View.OnClickListener, View.OnKeyListener
 {
+	private int mCount = 0;
+
 	private ColorTrackView mColorTrackView = null;
 	private ColorTrackView mColorTrackView1 = null;
 	private ColorTrackView mColorTrackView2 = null;
@@ -95,6 +97,7 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 		@Override
 		public void run()
 		{
+			mCount++;
 			if (mColorTrackView.getProgress() >= mColorTrackView.getMax())
 			{
 				mColorTrackView.setProgress(0);
@@ -112,6 +115,30 @@ public class ColorTrackFragment extends BaseFragment implements View.OnClickList
 			mColorTrackView5.setProgress(mColorTrackView5.getProgress() + 1);
 			mColorTrackView7.setProgress(mColorTrackView7.getProgress() + 1);
 			mColorTrackProgressView.setProgress(mColorTrackProgressView.getProgress() + 1);
+
+			String[] strings = getResources().getStringArray(R.array.view_name);
+			int pos = (int) (Math.random() * 3);
+			switch (mCount)
+			{
+			case 30:
+				mColorTrackView.setText(strings[pos]);
+				mColorTrackView4.setText(strings[pos]);
+				mColorTrackProgressView.setText(strings[pos]);
+				break;
+
+			case 60:
+				mColorTrackView.setText(strings[pos]);
+				mColorTrackView4.setText(strings[pos]);
+				mColorTrackProgressView.setText(strings[pos]);
+				break;
+
+			case 90:
+				mColorTrackView.setText(strings[pos]);
+				mColorTrackView4.setText(strings[pos]);
+				mColorTrackProgressView.setText(strings[pos]);
+				mCount = 0;
+				break;
+			}
 
 			mColorTrackView.postDelayed(mDrawRunnable, 50);
 		}
