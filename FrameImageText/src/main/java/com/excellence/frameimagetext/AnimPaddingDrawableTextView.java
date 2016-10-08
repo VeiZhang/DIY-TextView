@@ -86,4 +86,9 @@ public class AnimPaddingDrawableTextView extends TextView
 				mLevel = 0;
 		}
 	}
+
+	public int getStartLevel()
+	{
+		return mLevel;
+	}
 }
